@@ -1,0 +1,84 @@
+2015-05-08 10:48:29 : *****************************************
+2015-05-08 10:49:55 : *****************************************
+2015-05-08 10:52:59 : *****************************************
+2015-05-08 10:52:59 : Current user: ---------------
+TEST_MOLDE
+2015-05-08 10:52:59 : *****************************************
+2015-05-08 10:53:27 : OK, input value was accepted: GUI: Log sample | Field: Template | Testtype: Standard | Input: 
+2015-05-08 10:53:29 : OK, input value was accepted: GUI: Log sample | Field: Study | Testtype: Standard | Input: MOLDERM_TER
+2015-05-08 10:53:31 : OK, input value was accepted: GUI: Log sample | Field: Clincial Site | Testtype: Standard | Input: 
+2015-05-08 10:53:32 : OK, input value was accepted: GUI: Log sample | Field: Personal number | Testtype: Standard | Input: 
+2015-05-08 10:53:34 : Test #01 initiated. GUI: Log sample | Field: Subject ID | Testtype: Malware | TestInput: ') DROP TABLE KI_VERY_VERY_IMPORTANT_DATATABLE --
+2015-05-08 10:53:35 : Test OK, Error message appeared 
+2015-05-08 10:53:36 : OK, input value was accepted: GUI: Log sample | Field: Subject ID | Testtype: Malware | Input: TER 88
+2015-05-08 10:53:44 : Test #01 initiated. GUI: Log sample | Field: LabelID | Testtype: Malware | TestInput: VAL_2015-05-08 10:52:58
+2015-05-08 10:53:44 : Test failed! No warnings about sql injection appeared, Bummer.. 
+2015-05-08 10:53:45 : OK, input value was accepted: GUI: Log sample | Field: Sample Type | Testtype: Standard | Input: 
+2015-05-08 10:53:51 : OK, input value was accepted: GUI: Log sample | Field: Sprec | Testtype: Standard | Input: 
+2015-05-08 10:53:52 : OK, input value was accepted: GUI: Log sample | Field: Sampled Date | Testtype: Standard | Input: 
+2015-05-08 10:53:53 : OK, input value was accepted: GUI: Log sample | Field: Sampled Volume/Amount | Testtype: Standard | Input: 
+2015-05-08 10:53:56 : OK, input value was accepted: GUI: Log sample | Field: Sample Units | Testtype: Standard | Input: ML
+2015-05-08 10:53:58 : OK, input value was accepted: GUI: Log sample | Field: Sample Form | Testtype: Standard | Input: 
+2015-05-08 10:54:03 : Test finished
+2015-05-08 10:54:03 : *****************************************
+2015-05-08 10:54:03 : *****************************************
+2015-05-08 10:54:03 : Current user: ---------------
+TEST_HERM
+2015-05-08 10:54:03 : *****************************************
+2015-05-08 10:54:20 : OK, input value was accepted: GUI: Log sample | Field: Template | Testtype: Standard | Input: 
+2015-05-08 10:54:23 : OK, input value was accepted: GUI: Log sample | Field: Study | Testtype: Standard | Input: MDS_HERM_TEST
+2015-05-08 10:54:25 : OK, input value was accepted: GUI: Log sample | Field: Clincial Site | Testtype: Standard | Input: 
+2015-05-08 10:54:26 : OK, input value was accepted: GUI: Log sample | Field: Personal number | Testtype: Standard | Input: 
+2015-05-08 10:54:28 : Test #01 initiated. GUI: Log sample | Field: Subject ID | Testtype: Malware | TestInput: ') DROP TABLE KI_VERY_VERY_IMPORTANT_DATATABLE --
+2015-05-08 10:54:28 : Test OK, Error message appeared 
+2015-05-08 10:54:30 : OK, input value was accepted: GUI: Log sample | Field: Subject ID | Testtype: Malware | Input: MDS_188
+2015-05-08 10:54:37 : Test #01 initiated. GUI: Log sample | Field: LabelID | Testtype: Malware | TestInput: VAL_2015-05-08 10:52:58
+2015-05-08 10:54:37 : Test failed! No warnings about sql injection appeared, Bummer.. 
+2015-05-08 10:54:39 : OK, input value was accepted: GUI: Log sample | Field: Sample Type | Testtype: Standard | Input: 
+2015-05-08 10:54:45 : OK, input value was accepted: GUI: Log sample | Field: Sprec | Testtype: Standard | Input: 
+2015-05-08 10:54:46 : OK, input value was accepted: GUI: Log sample | Field: Sampled Date | Testtype: Standard | Input: 
+2015-05-08 10:54:47 : OK, input value was accepted: GUI: Log sample | Field: Sampled Volume/Amount | Testtype: Standard | Input: 
+2015-05-08 10:54:49 : OK, input value was accepted: GUI: Log sample | Field: Sample Units | Testtype: Standard | Input: MG
+2015-05-08 10:54:51 : OK, input value was accepted: GUI: Log sample | Field: Sample Form | Testtype: Standard | Input: 
+2015-05-08 10:54:52 : OK, input value was accepted: GUI: Log sample | Field: Aliquot Sample | Testtype: Standard | Input: False
+2015-05-08 10:54:57 : Test finished
+2015-05-08 10:54:57 : *****************************************
+2015-05-08 11:05:53 : *****************************************
+2015-05-08 11:05:53 : Current user: ---------------TEST_MOLDE
+2015-05-08 11:05:53 : *****************************************
+2015-05-08 11:06:21 : *****************************************
+2015-05-08 11:06:21 : Current user: ---------------TEST_MOLDE
+2015-05-08 11:06:21 : *****************************************
+2015-05-08 11:06:46 : *****************************************
+2015-05-08 11:06:46 : Current user: ---------------TEST_MOLDE
+2015-05-08 11:06:46 : *****************************************
+2015-05-12 16:25:22 : *****************************************
+2015-05-12 16:25:22 : Current user: ---------------TEST_MOLDE
+2015-05-12 16:25:22 : *****************************************
+2015-05-12 16:28:55 : *****************************************
+2015-05-12 16:28:55 : Current user: ---------------TEST_MOL
+2015-05-12 16:28:55 : *****************************************
+2015-05-12 16:30:16 : *****************************************
+2015-05-12 16:30:16 : Current user: ---------------TEST_MOL
+2015-05-12 16:30:16 : *****************************************
+2015-05-12 16:30:44 : OK, input value was accepted: GUI: Log sample | Field: Template | Testtype: Standard | Input: 
+2015-05-12 16:30:47 : OK, input value was accepted: GUI: Log sample | Field: Study | Testtype: Standard | Input: MOLDERM_TER
+2015-05-12 16:30:49 : OK, input value was accepted: GUI: Log sample | Field: Clincial Site | Testtype: Standard | Input: 
+2015-05-12 16:30:50 : OK, input value was accepted: GUI: Log sample | Field: Personal number | Testtype: Standard | Input: 
+2015-05-12 16:30:52 : Test #01 initiated. GUI: Log sample | Field: Subject ID | Testtype: Malware | TestInput: ') DROP TABLE KI_VERY_VERY_IMPORTANT_DATATABLE --
+2015-05-12 16:30:52 : Test OK, Error message appeared 
+2015-05-12 16:30:54 : Code |101 Input Error, input value was not accepted: GUI: Log sample | Field: Subject ID | Testtype: Malware | Input: TER 88
+2015-05-12 16:31:01 : Test #01 initiated. GUI: Log sample | Field: LabelID | Testtype: Malware | TestInput: VAL_2015-05-12 16:30:15
+2015-05-12 16:31:01 : Test failed! No warnings about sql injection appeared, Bummer.. 
+2015-05-12 16:31:02 : OK, input value was accepted: GUI: Log sample | Field: Sample Type | Testtype: Standard | Input: 
+2015-05-12 16:31:08 : OK, input value was accepted: GUI: Log sample | Field: Sprec | Testtype: Standard | Input: 
+2015-05-12 16:31:09 : OK, input value was accepted: GUI: Log sample | Field: Sampled Date | Testtype: Standard | Input: 
+2015-05-12 16:31:10 : OK, input value was accepted: GUI: Log sample | Field: Sampled Volume/Amount | Testtype: Standard | Input: 
+2015-05-12 16:31:13 : OK, input value was accepted: GUI: Log sample | Field: Sample Units | Testtype: Standard | Input: ML
+2015-05-12 16:31:15 : OK, input value was accepted: GUI: Log sample | Field: Sample Form | Testtype: Standard | Input: 
+2015-05-12 16:31:15 : Code |103 Login form value, Login values were missing/not accepted, no sample was logged. Current user dialog: Log sample
+2015-05-12 16:31:16 : Test finished
+2015-05-12 16:31:16 : *****************************************
+2015-05-12 16:31:16 : *****************************************
+2015-05-12 16:31:16 : Current user: ---------------TEST_HERM
+2015-05-12 16:31:16 : *****************************************
