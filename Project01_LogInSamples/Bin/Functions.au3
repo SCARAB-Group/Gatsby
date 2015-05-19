@@ -22,19 +22,18 @@
 ;Propose added by PES - Support all resolutions
 ;Function to convert screen coordinates to support all res.
 ;XYa, XYb, XYc coords based on known good coords at 1280x800 resolution ?
-#cs ########### EXAMPLE CALL ##########################
+#cs ########### EXAMPLE CALL ################
 $windowXb = 174
 $windowYb = 298
 _ConvertXY($windowXb, $windowYb)
 MouseClick("left", $windowXb, $windowYb)
-#ce ########### /EXAMPLE CALL #########################
-
-#cs ########### FUNCTION ######################
+#ce ########### /EXAMPLE CALL ###############
+; ########### FUNCTION ######################
 Func _ConvertXY(ByRef $Xin, ByRef $Yin)
      $Xin = Round( ($Xin / 1280) * @DesktopWidth )
      $Yin = Round( ($Yin / 800) * @DesktopHeight )
 EndFunc
-#ce ########### /FUNCTION #####################
+; ########### /FUNCTION #####################
 
 Func mouseClickFcn($curWindow, $xpos, $ypos, $nrOfClick)
    ;ConsoleWrite("---------------" & @CRLF & "Starting LIMS.." & @CRLF)
