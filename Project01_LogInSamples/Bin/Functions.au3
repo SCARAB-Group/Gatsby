@@ -28,6 +28,7 @@ $windowYb = 298
 _ConvertXY($windowXb, $windowYb)
 MouseClick("left", $windowXb, $windowYb)
 #ce ########### /EXAMPLE CALL ###############
+
 ; ########### FUNCTION ######################
 Func _ConvertXY(ByRef $Xin, ByRef $Yin)
      $Xin = Round( ($Xin / 1280) * @DesktopWidth )
