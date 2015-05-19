@@ -302,10 +302,16 @@ Func testField($curfieldType, $curProposedInit, $curProposedValue, $curTestValue
 EndFunc
 
 
-
 Func logEvent($logMsg, $logFilename)
    _FileWriteLog($logFilename, $logMsg, -1)
    Return
+EndFunc
+
+
+Func getGroupTestValueObject($groupName)
+   If $testValuesAll.Exists($groupName) Then
+	  return $testValuesAll.Item($groupName)
+   EndIf
 EndFunc
 
 
