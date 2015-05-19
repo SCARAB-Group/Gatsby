@@ -30,10 +30,12 @@ MouseClick("left", $windowXb, $windowYb)
 #ce ########### /EXAMPLE CALL ###############
 
 ; ########### FUNCTION ######################
+#cs
 Func _ConvertXY(ByRef $Xin, ByRef $Yin)
      $Xin = Round( ($Xin / 1280) * @DesktopWidth )
      $Yin = Round( ($Yin / 800) * @DesktopHeight )
 EndFunc
+#ce
 ; ########### /FUNCTION #####################
 
 Func mouseClickFcn($curWindow, $xpos, $ypos, $nrOfClick)
