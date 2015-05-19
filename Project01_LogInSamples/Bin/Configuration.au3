@@ -17,9 +17,11 @@
 Local $curEnvironment = "LIMS_BB_TEST"
 
 local $nrOfGroups = 1
-local $userConfigArray[2][3] = [["TEST_MOL","abcde12345",12], ["TEST_HERM","abcde12345",13] ]
-
-
+local $userConfigArray[2][3] = [ _
+["TEST_MOL","abcde12345",12], _
+["TEST_HERM","abcde12345",13], _
+["TEST_PATOL","abcde12345",13] _
+]
 
 Local $workFlowPositions[2][2] = [ [1000, 365], [1300, 365] ]
 Local $nrOfFunctions = 0
