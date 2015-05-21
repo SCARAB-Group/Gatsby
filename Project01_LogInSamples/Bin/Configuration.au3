@@ -17,13 +17,13 @@
 Local $curEnvironment = "LIMS_BB_TEST"
 
 local $nrOfGroups = 1
-local $userConfigArray[2][3] = [ _
+local $userConfigArray[3][3] = [ _
 ["TEST_MOL","abcde12345",12], _
 ["TEST_HERM","abcde12345",13], _
 ["TEST_PATOL","abcde12345",13] _
 ]
 
-Local $workFlowPositions[2][2] = [ [1000, 365], [1300, 365] ]
+Local $workFlowPositions[2][2] = [ [1000, 375], [1300, 375] ]
 Local $nrOfFunctions = 0
 Local $stdSleep = 750
 local $maliciousString = "') DROP TABLE KI_VERY_VERY_IMPORTANT_DATATABLE --"
