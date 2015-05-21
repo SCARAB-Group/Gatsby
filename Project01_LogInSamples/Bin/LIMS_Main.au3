@@ -32,9 +32,6 @@ If $winCheck <> 0 Then
    MouseClickFcn("Citrix Receiver - Security Warning", 1000, 600, 1)
 EndIf
 
-; =======================
-; "New" run procedure
-; =======================
 ; Declare the required base object that holds everything
 setupConfigurations()
    ConsoleWrite("getvalue: " & getTestValue("MOLDERM", "LogSampleButtonCoords1") & @CRLF)
@@ -102,8 +99,9 @@ For $groupName In $groupsToTest
 		 local	$curSleepValue = $currentTestScheme[$testStep][6]
 		 local	$curTestType = $currentTestScheme[$testStep][7]
 
-		 ConsoleWrite(@TAB & "Step config:" )
-		 ConsoleWrite(@TAB & $curfieldType & ", " & $curProposedInit & ", " & $curProposedValue & ", " & $curTestValue & ", " & $curExpectedOutcome & ", " & $curFieldText & ", " & $curSleepValue & ", " & $curTestType & @CRLF)
+		 ; Enable these for debugging
+		 ;ConsoleWrite(@TAB & "Step config:" )
+		 ;ConsoleWrite(@TAB & $curfieldType & ", " & $curProposedInit & ", " & $curProposedValue & ", " & $curTestValue & ", " & $curExpectedOutcome & ", " & $curFieldText & ", " & $curSleepValue & ", " & $curTestType & @CRLF)
 
 		 IF $curTestType == 'Standard' Then
 			checkSingleField($curfieldType, $curProposedInit, $curProposedValue, $curTestValue, $curExpectedOutcome, $curFieldText, $curSleepValue, $curTestType)
@@ -213,6 +211,9 @@ Next
 ;~    logoutLIMS()
 
 ;~ Next
+
+
+
 
 
 
