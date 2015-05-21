@@ -4,16 +4,24 @@
  Author:         Annie Åsberg, Jesper Lind
 
  Script Function:
-	Run LIMS as a robot
-	  N.B. Require Full windoW,
+   Setup configurations in this script. These values are:
+	  - Environment
+	  - User groups
+	  - LIMS user name
+	  - LIMS password
+	  - Values to write in fields
+	  - Click coordinates
+	  - probably more...
+
+   Note: test schemes are setup in TestSchemes.au3
 
 #ce ----------------------------------------------------------------------------
 
+;~ #include <TestSchemes.au3>
 
 ; =================================================
 ; Configuration
 ; =================================================
-
 Local $curEnvironment = "LIMS_BB_TEST"
 
 local $nrOfGroups = 1
@@ -38,10 +46,19 @@ Local $curSleepValue
 
 Local $curTestIndex
 
+; ================
+; "New" stuff here
+;=================
+; Set group name to run the tests for. Set to empty string to run all groups
+local $testForGroup = "" ;"MOLDERM"
+
+; Set test schemes to run. If all groups should be run then all test schemes are run
+local $testForSchemes = "" ;[1] = ["LOG_SAMPLE"]
+
+
 ; =================================================
 ; Group-specific test values are defined here
 ; =================================================
-
 ; Holds all test values (dictionary-type object). This object holds a dictionary for each group's test values
 local $testValuesAll = ObjCreate("Scripting.Dictionary")
 
@@ -60,39 +77,40 @@ $testValuesAll.ADD("TEST_GROUP", $testValuesTestGroup)
 ; ####################### END EXAMPLE #######################
 
 
-; ------ Values for MOLDERM added below ------
-local $testValuesMOLDERM = ObjCreate("Scripting.Dictionary")
-$testValuesMOLDERM.ADD("LabelID", "VAL_" & _Now())
-$testValuesAll.ADD("MOLDERM", $testValuesMOLDERM)
+;~ ; ------ Values for MOLDERM added below ------
+;~ local $testValuesMOLDERM = ObjCreate("Scripting.Dictionary")
+;~ $testValuesMOLDERM.ADD("LabelID", "VAL_" & _Now())
+;~ $testValuesAll.ADD("MOLDERM", $testValuesMOLDERM)
 
-; ------ Values for MDS_HERM added below ------
-local $testValuesMDSHERM = ObjCreate("Scripting.Dictionary")
-$testValuesMDSHERM.ADD("LabelID", "VAL_" & _Now())
-$testValuesAll.ADD("MDS_HERM", $testValuesMDSHERM)
+;~ ; ------ Values for MDS_HERM added below ------
+;~ local $testValuesMDSHERM = ObjCreate("Scripting.Dictionary")
+;~ $testValuesMDSHERM.ADD("LabelID", "VAL_" & _Now())
+;~ $testValuesAll.ADD("MDS_HERM", $testValuesMDSHERM)
 
 
-; ------ Values for BBK_PATOL added below ------
-local $testValuesBBKPATOL = ObjCreate("Scripting.Dictionary")
-$testValuesBBKPATOL.ADD("LabelID", "VAL_" & _
-   StringReplace( StringReplace( StringReplace(_Now(), " ", "_"), ":", ""), "-", ""))
-$testValuesAll.ADD("BBK_PATOL", $testValuesBBKPATOL)
+;~ ; ------ Values for BBK_PATOL added below ------
+;~ local $testValuesBBKPATOL = ObjCreate("Scripting.Dictionary")
+;~ $testValuesBBKPATOL.ADD("LabelID", "VAL_" & _
+;~    StringReplace( StringReplace( StringReplace(_Now(), " ", "_"), ":", ""), "-", ""))
+;~ $testValuesAll.ADD("BBK_PATOL", $testValuesBBKPATOL)
 
 
 ; =================================================
 ; The even newer way of defining all configurations
 ; =================================================
-
 ; Declare the required base object that holds everything
-local $groupConfigurations = ObjCreate("Scripting.Dictionary")
+Local $groupConfigurations = ObjCreate("Scripting.Dictionary")
 
-; Create a new entry for a group
-createNewGroupConfig("TESTGROUP", "test_usr", "super_pass123")
-; Add test scheme
-addNewTestScheme("TESTGROUP", "TESTSCHEME", $myTestScheme)
-; Add test values
-addTestValue("TESTGROUP", "LabelID", "L123")
-addTestValue("TESTGROUP", "SubjectID", "S12345")
-; Print test values
-;ConsoleWrite(getTestValue("TESTGROUP", "LabelID") & @CRLF)
-;ConsoleWrite(getTestValue("TESTGROUP", "SubjectID") & @CRLF)
+; This is a function because variables containing test schemes are not declared
+; at the time of including this file (chicken-and-egg situation)
+Func setupConfigurations()
+   ; Declare the required base object that holds everything
+   $groupConfigurations = ObjCreate("Scripting.Dictionary")
 
+   ; ----------- MOLDERM ------------
+   createGroupConfig("MOLDERM", "TEST_MOL", "abcde12345")
+   local $btnCoords[2] = [1000, 375]
+   addTestValue("MOLDERM", "LogSampleButtonCoords", $btnCoords)
+   addTestValue("MOLDERM", "LabelID1", "L12345")
+
+EndFunc

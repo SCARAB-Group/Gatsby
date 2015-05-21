@@ -45,8 +45,7 @@ Func mouseClickFcn($curWindow, $xpos, $ypos, $nrOfClick)
    Return
 EndFunc
 
-
-Func loginLIMS($userInfoArray, $userIndex)
+Func loginLIMS($groupName)
    ConsoleWrite("---------------" & @CRLF & "Logging in.." & @CRLF)
    WinWaitActive("LabWare LIMS")
    Send("!f")
@@ -55,12 +54,10 @@ Func loginLIMS($userInfoArray, $userIndex)
    Send("{ENTER}")
 
    WinWaitActive("Please Log In")
-   ;Send("test_molde")
-   Send($userInfoArray[$userIndex][0])
+   Send(getUserName($groupName))
    Send("{ENTER}")
 
-   ;Send("abcd12345")
-   Send($userInfoArray[$userIndex][1])
+   Send(getPassword($groupName))
    Send("{ENTER}")
 
    Send("l")
@@ -76,6 +73,37 @@ Func loginLIMS($userInfoArray, $userIndex)
    Return True
 
 EndFunc
+
+;~ Func loginLIMS($userInfoArray, $userIndex)
+;~    ConsoleWrite("---------------" & @CRLF & "Logging in.." & @CRLF)
+;~    WinWaitActive("LabWare LIMS")
+;~    Send("!f")
+;~    Send("i")
+;~    Send("i")
+;~    Send("{ENTER}")
+
+;~    WinWaitActive("Please Log In")
+;~    ;Send("test_molde")
+;~    Send($userInfoArray[$userIndex][0])
+;~    Send("{ENTER}")
+
+;~    ;Send("abcd12345")
+;~    Send($userInfoArray[$userIndex][1])
+;~    Send("{ENTER}")
+
+;~    Send("l")
+
+;~    WinWaitActive("Please Log In")
+;~    Send("!o")
+
+;~    $winCheck = WinWait("Information", "", 6)
+;~    If $winCheck <> 0 Then
+;~ 	  Return False
+;~    EndIf
+
+;~    Return True
+
+;~ EndFunc
 
 
 Func logoutLIMS()
@@ -185,6 +213,18 @@ Func checkSingleField($fieldType, $propInit, $propVal, $testVal ,$expOutcome, $f
 			Send("{ENTER}")
 		 EndIf
 
+	  Case "Click"
+		 ; propVal must be a 2D-array with x and y coordinates
+		 ; fieldText is used to identify the window that opens on click
+		 mouseClickFcn($curEnvironment, $propVal[0], $propVal[1], 1)
+		 ConsoleWrite("Waiting for window: " & $fieldText & @CRLF)
+		 WinWaitActive($fieldText)
+		 Sleep($sleepVal)
+
+	  Case "Close"
+		 ; To close a window
+		 closeUserDialog()
+
 	  Case Else
 		 Send("{ENTER}")
    EndSwitch
@@ -208,14 +248,14 @@ Func checkErrorMsg($fieldType, $propInit, $propVal, $testValSub ,$expOutcome, $f
    EndIf
 
    If $winCheck2 <> 0 Then
-     $logMsg = "Code |101 Input Error, input value was not accepted: GUI: " & $curUserFunctionID & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
+     $logMsg = "Code |101 Input Error, input value was not accepted: GUI: " & $testSchemeName & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
      logEvent($logMsg, @ScriptDir & "\Example.log")
 
      WinClose($winCheck2)
-     WinActive($curUserFunctionID)
+     WinActive($testSchemeName)
 
    Else
-      $logMsg = "OK, input value was accepted: GUI: " & $curUserFunctionID & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
+      $logMsg = "OK, input value was accepted: GUI: " & $testSchemeName & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
 	  logEvent($logMsg, @ScriptDir & "\Example.log")
 
 
@@ -234,16 +274,16 @@ Func closeUserDialog()
    $winCheck = WinWait("Information", "", 2)
 
    If $winCheck <> 0 Then
-     $logMsg = "Code |103 Login form value, Login values were missing/not accepted, no sample was logged. Current user dialog: " & $curUserFunctionID
+     $logMsg = "Code |103 Login form value, Login values were missing/not accepted, no sample was logged. Current user dialog: " & $testSchemeName
      logEvent($logMsg, @ScriptDir & "\Example.log")
 
      WinClose($winCheck)
-     WinActive($curUserFunctionID)
+     WinActive($testSchemeName)
      Send("!c")
   Else
 
 	  ; Handle exception for log sample dialog, end sample log and handle sample grid window
-	  If $curUserFunctionID == "Log sample" Then
+	  If $testSchemeName == "Log sample" Then
 		 handleSampleGridWindow()
 	  EndIf
 
@@ -280,7 +320,7 @@ Func testField($curfieldType, $curProposedInit, $curProposedValue, $curTestValue
 
    $winCheck = WinWait("Information", "", 6)
 
-   $logMsg = "Test #01 initiated. GUI: " & $curUserFunctionID & " | Field: "  & $curFieldText & " | Testtype: "  & $curTestType  & " | TestInput: "  & $curTestValue
+   $logMsg = "Test #01 initiated. GUI: " & $testSchemeName & " | Field: "  & $curFieldText & " | Testtype: "  & $curTestType  & " | TestInput: "  & $curTestValue
    logEvent($logMsg, @ScriptDir & "\Example.log")
 
    If $winCheck == 0 Then
@@ -289,7 +329,7 @@ Func testField($curfieldType, $curProposedInit, $curProposedValue, $curTestValue
 
    Else
 	  WinClose($winCheck)
-	  WinActive($curUserFunctionID)
+	  WinActive($testSchemeName)
 	  $logMsg = "Test OK, Error message appeared "
       logEvent($logMsg, @ScriptDir & "\Example.log")
 
@@ -314,12 +354,11 @@ Func logEvent($logMsg, $logFilename)
    Return
 EndFunc
 
-
-Func getGroupTestValueObject($groupName)
-   If $testValuesAll.Exists($groupName) Then
-	  return $testValuesAll.Item($groupName)
-   EndIf
-EndFunc
+;~ Func getGroupTestValueObject($groupName)
+;~    If $testValuesAll.Exists($groupName) Then
+;~ 	  return $testValuesAll.Item($groupName)
+;~    EndIf
+;~ EndFunc
 
 ; Creates a new configuration object.
 ; Inputs:
@@ -328,7 +367,7 @@ EndFunc
 ; 	- LIMS password (string)
 ;
 ; Note: requires the variable $groupConfigurations [local $groupConfigurations = ObjCreate("Scripting.Dictionary")]
-Func createNewGroupConfig($groupName, $groupUser, $groupPass)
+Func createGroupConfig($groupName, $groupUser, $groupPass)
    $gConfig = ObjCreate("Scripting.Dictionary")
    $gConfig.ADD("user", $groupUser)
    $gConfig.ADD("pass", $groupPass)
@@ -342,7 +381,7 @@ EndFunc
 ; 	- Group name (string)
 ; 	- Test scheme name (string)
 ; 	- Test scheme definition (2D-array)
-Func addNewTestScheme($groupName, $schemeName, $testArray)
+Func addTestScheme($groupName, $schemeName, $testArray)
    $groupConfigurations.Item($groupName).Item("TESTSCHEMES").ADD($schemeName, $testArray)
 EndFunc
 
@@ -355,6 +394,17 @@ EndFunc
 ; 	- Test scheme definition (2D-array)
 Func getTestScheme($groupName, $schemeName)
    Return $groupConfigurations.Item($groupName).Item("TESTSCHEMES").Item($schemeName)
+EndFunc
+
+; Retreives all test schemes for a group
+; Inputs:
+; 	- Group name (string)
+; 	- Test scheme name (string)
+;
+; Outputs:
+; 	- Test scheme definitions (Scripting.Dictionary)
+Func getTestSchemes($groupName)
+   Return $groupConfigurations.Item($groupName).Item("TESTSCHEMES")
 EndFunc
 
 ; Adds a new test value for a group
@@ -375,5 +425,25 @@ EndFunc
 ; 	- The actual test value
 Func getTestValue($groupName, $key)
    Return $groupConfigurations.Item($groupName).Item("TESTVALUES").Item($key)
+EndFunc
+
+; Retreives the LIMS user name for a group
+; Inputs:
+; 	- Group name (string)
+;
+; Outputs:
+; 	- LIMS user name (string)
+Func getUserName($groupName)
+   Return $groupConfigurations.Item($groupName).Item("user")
+EndFunc
+
+; Retreives the LIMS password for a group
+; Inputs:
+; 	- Group name (string)
+;
+; Outputs:
+; 	- LIMS password (string)
+Func getPassword($groupName)
+   Return $groupConfigurations.Item($groupName).Item("pass")
 EndFunc
 

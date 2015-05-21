@@ -4,11 +4,15 @@
  Author:         Annie Åsberg, Jesper Lind
 
  Script Function:
-	Run LIMS as a robot
-	  N.B. Require Full windoW,
+   Setup the test schemes in this script, i.e. a number of steps to perform
+   to test something.
+
+   Short how-to:
+	  - Define your test scheme in a 2D-array in the function setupTests().
+	  - Add the test definition to the group config
+	  --> Use existing test definitions as an example.
 
 #ce ----------------------------------------------------------------------------
-
 
 ; To be fetched from database
 ; TestTypes: None, Standard, Malware
@@ -48,9 +52,9 @@
 
 ; Get test value objects
 ; ...maybe better to use the dictionary created in Configuration.au3 and skip the "main" dict?
-Local $tvMOLDERM = getGroupTestValueObject("MOLDERM")
-Local $tvMDSHERM = getGroupTestValueObject("MDS_HERM")
-Local $tvBBKPATOL = getGroupTestValueObject("BBK_PATOL")
+;~ Local $tvMOLDERM = getGroupTestValueObject("MOLDERM")
+;~ Local $tvMDSHERM = getGroupTestValueObject("MDS_HERM")
+;~ Local $tvBBKPATOL = getGroupTestValueObject("BBK_PATOL")
 
 ;TestTypes: None, Standard, Malware
 Local $groupConfigArray[2][14][8] = [ _
@@ -60,7 +64,7 @@ Local $groupConfigArray[2][14][8] = [ _
 ["List","k","","","","Clincial Site",$stdSleep, "Standard"], _
 ["Skip","","","","","Personal number",0, "Standard"], _
 ["Text","","TER 88",$maliciousString,"","Subject ID",$stdSleep, "Malware"], _
-["Text","",$tvMDSHERM.Item("LabelID"),$tvMDSHERM.Item("LabelID"),"","LabelID",$stdSleep, "Malware"], _
+["Text","",$curLabelID,$curLabelID,"","LabelID",$stdSleep, "Malware"], _
 ["List","s","","","","Sample Type",$stdSleep, "Standard"], _
 ["Sprec","","","","","Sprec",0, "Standard"], _
 ["Skip","","","","","Sampled Date",0, "Standard"], _
@@ -92,6 +96,29 @@ Local $groupConfigArray[2][14][8] = [ _
 ;~ ] _
 ;~ ]
 
+; ==================
+; "New" stuff here
+; ==================
 
+Func setupTests()
 
-
+   local $moldermLoginSampleTestScheme[16][8] = [ _
+   ["Click","",getTestValue("MOLDERM", "LogSampleButtonCoords"),"","","Log sample", "", "Standard"], _
+   ["Skip","","","","","Template",0, "Standard"], _
+   ["Glass","m","MOLDERM_TER","","","Study",$stdSleep, "Standard"], _
+   ["List","k","","","","Clincial Site",$stdSleep, "Standard"], _
+   ["Skip","","","","","Personal number",0, "Standard"], _
+   ["Text","","TER 88",$maliciousString,"","Subject ID",$stdSleep, "Malware"], _
+   ["Text","",getTestValue("MOLDERM", "LabelID1"),getTestValue("MOLDERM", "LabelID1"),"","LabelID",$stdSleep, "Standard"], _
+   ["List","s","","","","Sample Type",$stdSleep, "Standard"], _
+   ["Sprec","","","","","Sprec",0, "Standard"], _
+   ["Skip","","","","","Sampled Date",0, "Standard"], _
+   ["Skip","","","","","Sampled Volume/Amount",0, "Standard"], _
+   ["Glass","m","ML","","","Sample Units",$stdSleep, "Standard"], _
+   ["List","f","","","","Sample Form",$stdSleep, "Standard"], _
+   ["Skip","","","","","Sampled Volume/Amount",0, "Standard"], _
+   ["Skip","","","","","Sampled Volume/Amount",0, "Standard"], _
+   ["Close","","","","","", "", "Standard"] _
+   ]
+   addTestScheme("MOLDERM", "Log sample", $moldermLoginSampleTestScheme)
+EndFunc
