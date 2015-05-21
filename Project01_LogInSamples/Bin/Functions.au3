@@ -68,7 +68,13 @@ Func loginLIMS($userInfoArray, $userIndex)
    WinWaitActive("Please Log In")
    Send("!o")
 
-   Return
+   $winCheck = WinWait("Information", "", 6)
+   If $winCheck <> 0 Then
+	  Return False
+   EndIf
+
+   Return True
+
 EndFunc
 
 
@@ -89,9 +95,10 @@ EndFunc
 
 Func handleSprecInput()
    ; TODO: Generalize this function
-   WinWait("SPREC Codes Data", "", 1)
-   WinWaitActive("SPREC Codes Data")
+   ;WinWait("SPREC Codes Data", "", 1)
    Send("{ENTER}")
+   WinWaitActive("SPREC Codes Data")
+   ;Send("{ENTER}")
 
    Sleep(500)
    Send("o")
@@ -132,16 +139,14 @@ Func checkSingleField($fieldType, $propInit, $propVal, $testVal ,$expOutcome, $f
 
    Switch $fieldType
 	  Case "Skip"
-
 		 ConsoleWrite("Skip detected"& @CRLF)
 		 Sleep($sleepVal)
 		 Send("{ENTER}")
 		 Sleep($sleepVal)
 
-
 	  Case "Text"
-			Send($propVal)
-			Send("{ENTER}")
+		 Send($propVal)
+		 Send("{ENTER}")
 
 	  Case "List"
 		 ConsoleWrite("List detected"& @CRLF)
@@ -316,4 +321,59 @@ Func getGroupTestValueObject($groupName)
    EndIf
 EndFunc
 
+; Creates a new configuration object.
+; Inputs:
+; 	- Group name (string)
+; 	- LIMS user name (string)
+; 	- LIMS password (string)
+;
+; Note: requires the variable $groupConfigurations [local $groupConfigurations = ObjCreate("Scripting.Dictionary")]
+Func createNewGroupConfig($groupName, $groupUser, $groupPass)
+   $gConfig = ObjCreate("Scripting.Dictionary")
+   $gConfig.ADD("user", $groupUser)
+   $gConfig.ADD("pass", $groupPass)
+   $groupConfigurations.ADD($groupName, $gConfig)
+   $groupConfigurations.Item($groupName).ADD("TESTSCHEMES", ObjCreate("Scripting.Dictionary"))
+   $groupConfigurations.Item($groupName).ADD("TESTVALUES", ObjCreate("Scripting.Dictionary"))
+EndFunc
+
+; Adds a new test scheme for a group
+; Inputs:
+; 	- Group name (string)
+; 	- Test scheme name (string)
+; 	- Test scheme definition (2D-array)
+Func addNewTestScheme($groupName, $schemeName, $testArray)
+   $groupConfigurations.Item($groupName).Item("TESTSCHEMES").ADD($schemeName, $testArray)
+EndFunc
+
+; Retreives a test scheme
+; Inputs:
+; 	- Group name (string)
+; 	- Test scheme name (string)
+;
+; Outputs:
+; 	- Test scheme definition (2D-array)
+Func getTestScheme($groupName, $schemeName)
+   Return $groupConfigurations.Item($groupName).Item("TESTSCHEMES").Item($schemeName)
+EndFunc
+
+; Adds a new test value for a group
+; Inputs:
+; 	- Group name (string)
+; 	- Test value key/identifier (string)
+; 	- The actual test value
+Func addTestValue($groupName, $key, $value)
+   $groupConfigurations.Item($groupName).Item("TESTVALUES").ADD($key, $value)
+EndFunc
+
+; Retreives a test value
+; Inputs:
+; 	- Group name (string)
+; 	- Test value key/identifier
+;
+; Outputs:
+; 	- The actual test value
+Func getTestValue($groupName, $key)
+   Return $groupConfigurations.Item($groupName).Item("TESTVALUES").Item($key)
+EndFunc
 

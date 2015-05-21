@@ -24,8 +24,12 @@
 ;mouseClickFcn("Citrix XenApp", 1075, 375, 1)
 
 ; Test
-mouseClickFcn("Citrix XenApp", 1400, 375, 1)
-
+mouseClickFcn("Citrix XenApp", 1200, 375, 1)
+; If Google Chrome then a window will appear asking for permissions for the Citrix App
+$winCheck = WinWait("Citrix Receiver - Security Warning", "", 5)
+If $winCheck <> 0 Then
+   MouseClickFcn("Citrix Receiver - Security Warning", 1000, 600, 1)
+EndIf
 
 For $curUserIndex = 0 to $nrOfGroups
    ConsoleWrite("---------------" & @CRLF & $curUserIndex & @CRLF)
@@ -36,15 +40,20 @@ For $curUserIndex = 0 to $nrOfGroups
    logEvent("*****************************************", @ScriptDir & "\Example.log")
 
 
-; Log in
-   loginLIMS($userConfigArray, $curUserIndex)
-   Sleep(10000)  	;TODO: Fix thism
+   ; Log in
+   $loginStatus = loginLIMS($userConfigArray, $curUserIndex)
 
+   If $loginStatus Then
+	  Sleep(7000)  	;TODO: Fix thism
+   Else
+	  WinClose($winCheck)
+	  $logMsg = "Test failed! Could not log in."
+	  logEvent($logMsg, @ScriptDir & "\Example.log")
+	  ContinueLoop ; Skip this group and move on to the next
+   EndIf
 
    ; Open Function
    ConsoleWrite("---------------" & @CRLF & "Opening function" & @CRLF)
-
-
 
    For $curFunction = 0 To $nrOfFunctions
 

@@ -76,3 +76,23 @@ local $testValuesBBKPATOL = ObjCreate("Scripting.Dictionary")
 $testValuesBBKPATOL.ADD("LabelID", "VAL_" & _
    StringReplace( StringReplace( StringReplace(_Now(), " ", "_"), ":", ""), "-", ""))
 $testValuesAll.ADD("BBK_PATOL", $testValuesBBKPATOL)
+
+
+; =================================================
+; The even newer way of defining all configurations
+; =================================================
+
+; Declare the required base object that holds everything
+local $groupConfigurations = ObjCreate("Scripting.Dictionary")
+
+; Create a new entry for a group
+createNewGroupConfig("TESTGROUP", "test_usr", "super_pass123")
+; Add test scheme
+addNewTestScheme("TESTGROUP", "TESTSCHEME", $myTestScheme)
+; Add test values
+addTestValue("TESTGROUP", "LabelID", "L123")
+addTestValue("TESTGROUP", "SubjectID", "S12345")
+; Print test values
+;ConsoleWrite(getTestValue("TESTGROUP", "LabelID") & @CRLF)
+;ConsoleWrite(getTestValue("TESTGROUP", "SubjectID") & @CRLF)
+

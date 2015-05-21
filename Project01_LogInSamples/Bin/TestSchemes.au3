@@ -46,7 +46,11 @@
 ;~ ]
 
 
-
+; Get test value objects
+; ...maybe better to use the dictionary created in Configuration.au3 and skip the "main" dict?
+Local $tvMOLDERM = getGroupTestValueObject("MOLDERM")
+Local $tvMDSHERM = getGroupTestValueObject("MDS_HERM")
+Local $tvBBKPATOL = getGroupTestValueObject("BBK_PATOL")
 
 ;TestTypes: None, Standard, Malware
 Local $groupConfigArray[2][14][8] = [ _
@@ -56,7 +60,7 @@ Local $groupConfigArray[2][14][8] = [ _
 ["List","k","","","","Clincial Site",$stdSleep, "Standard"], _
 ["Skip","","","","","Personal number",0, "Standard"], _
 ["Text","","TER 88",$maliciousString,"","Subject ID",$stdSleep, "Malware"], _
-["Text","",$curLabelID,$curLabelID,"","LabelID",$stdSleep, "Malware"], _
+["Text","",$tvMDSHERM.Item("LabelID"),$tvMDSHERM.Item("LabelID"),"","LabelID",$stdSleep, "Malware"], _
 ["List","s","","","","Sample Type",$stdSleep, "Standard"], _
 ["Sprec","","","","","Sprec",0, "Standard"], _
 ["Skip","","","","","Sampled Date",0, "Standard"], _
@@ -82,6 +86,11 @@ Local $groupConfigArray[2][14][8] = [ _
 ["RadioButton","","False","","","Aliquot Sample",0, "Standard"] _
 ] _
 ]
+;~ ], _
+;~ [ _
+;~ ["Text", "", $tvBBKPATOL.Item("LabelID"), $tvBBKPATOL.Item("LabelID"), "", "LabelID", $stdSleep, "Standard"]
+;~ ] _
+;~ ]
 
 
 
