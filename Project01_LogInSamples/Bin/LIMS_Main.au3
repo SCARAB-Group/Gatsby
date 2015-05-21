@@ -21,6 +21,7 @@
 
 ; Start LIMS
 ; Dev
+;mouseClickFcn("Citrix   XenApp", 1075, 375, 1)
 
 ; Test
 mouseClickFcn("Citrix XenApp", 1200, 375, 1)
