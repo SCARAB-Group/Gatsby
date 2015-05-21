@@ -139,6 +139,7 @@ Func checkSingleField($fieldType, $propInit, $propVal, $testVal ,$expOutcome, $f
 		 Sleep($sleepVal)
 
 
+
 	  Case "Text"
 			Send($propVal)
 			Send("{ENTER}")
