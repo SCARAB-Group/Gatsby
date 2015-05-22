@@ -21,24 +21,54 @@ Func setupTests()
 
    local $moldermLoginSampleTestScheme[16][8] = [ _
    ["Click","",getTestValue("MOLDERM", "LogSampleButtonCoords"),"","","Log sample", "", "Standard"], _
-   ["Skip","","","","","Template",0, "Standard"], _
+   ["Skip","","","","","Template",$stdSleep, "Standard"], _
    ["Glass","m","MOLDERM_TER","","","Study",$stdSleep, "Standard"], _
    ["List","k","","","","Clincial Site",$stdSleep, "Standard"], _
-   ["Skip","","","","","Personal number",0, "Standard"], _
-   ["Text","","TER 88",$maliciousString,"","Subject ID",$stdSleep, "Malware"], _
+   ["Skip","","","","","Personal number",$stdSleep, "Standard"], _
+   ["Text","","TER 88","TER 88","","Subject ID",$stdSleep, "Standard"], _
    ["Text","",getTestValue("MOLDERM", "LabelID1"),getTestValue("MOLDERM", "LabelID1"),"","LabelID",$stdSleep, "Standard"], _
    ["List","s","","","","Sample Type",$stdSleep, "Standard"], _
-   ["Sprec","","","","","Sprec",0, "Standard"], _
-   ["Skip","","","","","Sampled Date",0, "Standard"], _
-   ["Skip","","","","","Sampled Volume/Amount",0, "Standard"], _
+   ["Sprec","","","","","Sprec",$stdSleep, "Standard"], _
+   ["Skip","","","","","Sampled Date",$stdSleep, "Standard"], _
+   ["Skip","","","","","Sampled Volume/Amount",$stdSleep, "Standard"], _
    ["Glass","m","ML","","","Sample Units",$stdSleep, "Standard"], _
    ["List","f","","","","Sample Form",$stdSleep, "Standard"], _
-   ["Skip","","","","","Sampled Volume/Amount",0, "Standard"], _
-   ["Skip","","","","","Sampled Volume/Amount",0, "Standard"], _
-   ["Close","","","","","", "", "Standard"] _
+   ["Skip","","","","","Number of samples to log",$stdSleep, "Standard"], _
+   ["Skip","","","","","Aliquot sample",$stdSleep, "Standard"], _
+   ["ClickOK","","","","","Log sample", "", "Standard"] _
    ]
    addTestScheme("MOLDERM", "Log sample", $moldermLoginSampleTestScheme)
+
+
+
+   ;["Skip","","","","","Sampled date", $stdSleep, "Standard"], _
+   ;["Skip","2015-05-02","","","","Mottagardatum", $stdSleep, "Standard"] _
+
+   ;["Skip","","","","","Study", $stdSleep, "Standard"], _
+   Local $btbLoginSampleTestScheme[9][8] = [ _
+   ["Click","",getTestValue("BTB", "PatientButtonCoords"),"","","Patient Manager", "", "Standard"], _
+   ["Text","","19121212-1212","19121212-1212","","Svenskt personnummer (12 siff) ",$stdSleep, "Standard"], _
+   ["Click","",getTestValue("BTB", "LoginSampleButtonCoords"),"","","Log sample (Scan field)", "", "Standard"], _
+   ["Glass","B","","","","Study",$stdSleep, "Standard"], _
+   ["List","U","","","","Clincial Site",$stdSleep, "Standard"], _
+   ["Text","","Pad","Pad","", "Referral Number (PAD)", $stdSleep, "Standard"], _
+   ["Text","",getTestValue("BTB", "LabelID1"),getTestValue("BTB", "LabelID1"),"", "BBk849 ID", $stdSleep, "Standard"], _
+   ["ClickOK","","","","","Log sample", "", "Standard"], _
+   ["CloseDialog","","","","","", "", "Standard"] _
+   ]
+   addTestScheme("BTB", "Log sample", $btbLoginSampleTestScheme)
+
 EndFunc
+
+;~    ["List","U","","","","Clincial Site",$stdSleep, "Standard"], _
+;~    ["Text","","Pad","Pad","", "Referral Number (PAD)", $stdSleep, "Standard"], _
+;~    ["Text","","BBk849","Bbk849","", "Bbk849Id", $stdSleep, "Standard"], _
+;~    ["Text","","2D rör Id","2D rör Id","", "2D Rör-ID", $stdSleep, "Standard"], _
+;~    ["Text","","Sample Id","Sample Id","", "Sample Id", $stdSleep, "Standard"], _
+;~    ["List","s","","","","Sample Type",$stdSleep, "Standard"], _
+;~    ["Sprec","","","","","Sprec",0, "Standard"], _
+;~    ["List","B","","","","Localization",$stdSleep, "Standard"], _
+;~    ["List","M","","","","Diagnosis (MORF-kod)",$stdSleep, "Standard"] _
 
 
 

@@ -128,37 +128,37 @@ Func handleSprecInput()
    WinWaitActive("SPREC Codes Data")
    ;Send("{ENTER}")
 
-   Sleep(500)
+   Sleep($stdSleep)
    Send("o")
    Send("{ENTER}")
 
-   Sleep(500)
+   Sleep($stdSleep)
    Send("1")
    Send("{ENTER}")
 
-   Sleep(500)
+   Sleep($stdSleep)
    Send("1")
    Send("{ENTER}")
 
-   Sleep(500)
+   Sleep($stdSleep)
    Send("1")
    Send("{ENTER}")
 
-   Sleep(500)
+   Sleep($stdSleep)
    Send("1")
    Send("{ENTER}")
 
-   Sleep(500)
+   Sleep($stdSleep)
    Send("c")
    Send("{ENTER}")
 
-   Sleep(500)
+   Sleep($stdSleep)
    Send("Test comment")
    Send("{ENTER}")
 
    Send("{ENTER}")
    Send("!o")
-   Return
+
 EndFunc
 
 
@@ -173,15 +173,21 @@ Func checkSingleField($fieldType, $propInit, $propVal, $testVal ,$expOutcome, $f
 		 Sleep($sleepVal)
 
 	  Case "Text"
+		 Sleep($sleepVal)
 		 Send($propVal)
 		 Send("{ENTER}")
 
 	  Case "List"
 		 ConsoleWrite("List detected"& @CRLF)
 		 Sleep($sleepVal)
+
+;~ 		 ; Possible to open a list using F4 and then type in selection name
+;~ 		 If propVal <> "" Then
+;~ 			send("F4")
+
 		 Send($propInit)
 		 Send("{ENTER}")
-		 Send("{ENTER}")
+		 ;Send("{ENTER}")
 
 	  Case "Glass"
 		 ConsoleWrite("Glass detected"& @CRLF)
@@ -189,8 +195,12 @@ Func checkSingleField($fieldType, $propInit, $propVal, $testVal ,$expOutcome, $f
 		 Send($propInit)
 		 Send("{ENTER}")
 		 Sleep($sleepVal)
-		 Send($propVal)
-		 Send("{ENTER}")
+		 if($propVal <> "") then
+			Send($propVal)
+			Send("{ENTER}")
+		 Else
+			ConsoleWrite("No value entered"& @CRLF)
+		 EndIf
 
 	  Case "Sprec"
 		 ConsoleWrite("Sprec detected"& @CRLF)
@@ -221,9 +231,16 @@ Func checkSingleField($fieldType, $propInit, $propVal, $testVal ,$expOutcome, $f
 		 WinWaitActive($fieldText)
 		 Sleep($sleepVal)
 
-	  Case "Close"
-		 ; To close a window
-		 closeUserDialog()
+	  Case "ClickOK"
+		 clickOK($fieldText)
+
+	  Case "CloseDialog" ; Close by pressing File -> close
+		 Sleep($sleepVal)
+		 closeDialog()
+
+	  Case "CloseUserDialog" ; Close by pressing a close button
+		 Sleep($sleepVal)
+		 closeUserDialog($fieldText)
 
 	  Case Else
 		 Send("{ENTER}")
@@ -243,9 +260,11 @@ Func checkErrorMsg($fieldType, $propInit, $propVal, $testValSub ,$expOutcome, $f
    local $winCheck2 = ""
    consolewrite("CheckErrorMsg: Waiting for info window" & @CRLF & "+++++++++++++++" & @CRLF)
    $winCheck2 = WinWait("Information", "", 1)
-   IF $fieldText == "Personal number" Then
-	  Send("+{TAB}")
-   EndIf
+
+   ; Skipping fields should be done using the skip function in the test scheme array instead
+;~    IF $fieldText == "Personal number" Then
+;~ 	  Send("+{TAB}")
+;~    EndIf
 
    If $winCheck2 <> 0 Then
      $logMsg = "Code |101 Input Error, input value was not accepted: GUI: " & $testSchemeName & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
@@ -267,44 +286,64 @@ Func checkErrorMsg($fieldType, $propInit, $propVal, $testValSub ,$expOutcome, $f
  EndFunc
 
 
-Func closeUserDialog()
+Func clickOK($userDialogName)
 
    Send("!o")
-   local $winCheck = ""
-   $winCheck = WinWait("Information", "", 2)
 
-   If $winCheck <> 0 Then
-     $logMsg = "Code |103 Login form value, Login values were missing/not accepted, no sample was logged. Current user dialog: " & $testSchemeName
-     logEvent($logMsg, @ScriptDir & "\Example.log")
+   If ($userDialogName = "Log sample") OR ($userDialogName = "Log sample (Scan field)") Then
+	  local $winCheck = ""
+	  $winCheck = WinWait("Information", "", 2)
 
-     WinClose($winCheck)
-     WinActive($testSchemeName)
-     Send("!c")
-  Else
+	  If $winCheck <> 0 Then
+		$logMsg = "Code |103 Login form value, Login values were missing/not accepted, no sample was logged. Current test scheme: " & $testSchemeName
+		logEvent($logMsg, @ScriptDir & "\Example.log")
 
-	  ; Handle exception for log sample dialog, end sample log and handle sample grid window
-	  If $testSchemeName == "Log sample" Then
+		WinClose($winCheck)
+		WinActive($userDialogName)
+		Send("!c")
+	 Else
+		 $logMsg = "Sample logged successfully! Current test scheme: " & $testSchemeName
+		 logEvent($logMsg, @ScriptDir & "\Example.log")
+		 closeUserDialog($userDialogName)
 		 handleSampleGridWindow()
+
+		 ; Handle exception for log sample dialog, end sample log and handle sample grid window
+		 ;If $testSchemeName == "Log sample" Then
+
+		 ;EndIf
+
 	  EndIf
 
    EndIf
 
-
    Return
- EndFunc
 
+EndFunc
+
+; Close by pressing a "close" button
+Func closeUserDialog($userDialogName)
+   Sleep(2000)
+   WinWaitActive($userDialogName)
+   Send("!c")
+EndFunc
+
+; Close by pressing File -> Exit
+Func closeDialog()
+   Send("!f")
+   Send("x")
+EndFunc
 
 Func handleSampleGridWindow()
 
-   Sleep(2000)
-   WinWaitActive("Log sample")
-   Send("!c")
+;~    Sleep(2000)
+;~    WinWaitActive("Log sample")
+;~    Send("!c")
 
    WinWaitActive("Modify Samples Dialog")
    Send("!f")
    Send("x")
 
-   Return
+   ;Return
 EndFunc
 
 

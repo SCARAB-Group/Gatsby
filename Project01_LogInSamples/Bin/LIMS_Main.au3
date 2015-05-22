@@ -23,7 +23,7 @@
 ; Dev
 
 ; Test
-mouseClickFcn("Citrix XenApp", 1200, 375, 1)
+mouseClickFcn("Citrix XenApp", 1350, 275, 1)
 Sleep(5000)
 ; If Google Chrome then a window will appear asking for permissions for the Citrix App
 $winCheck = WinWait("Citrix Receiver - Security Warning", "", 2)
@@ -33,13 +33,12 @@ EndIf
 
 ; Declare the required base object that holds everything
 setupConfigurations()
-   ConsoleWrite("getvalue: " & getTestValue("MOLDERM", "LogSampleButtonCoords1") & @CRLF)
 setupTests()
 
 local $groupsToTest[0]
 
 If $testForGroup == "" Then ; $groupToTest is set in Configuration.au3
-   ConsoleWrite("Testing for all groups")
+   ConsoleWrite("Testing for all groups" & @CRLF)
    For $groupName In $groupConfigurations
 	  _ArrayAdd($groupsToTest, $groupName)
    Next
@@ -117,6 +116,9 @@ For $groupName In $groupsToTest
 
 Next
 
+closeDialog()
+Sleep($stdSleep)
+Send("{ENTER}")
 
 
 

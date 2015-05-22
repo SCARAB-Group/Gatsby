@@ -27,7 +27,7 @@
 ; "New" stuff here
 ;=================
 ; Set group name to run the tests for. Set to empty string to run all groups
-local $testForGroup = "" ;"MOLDERM"
+local $testForGroup = "" ;"BTB" ;"MOLDERM"
 
 ; Set test schemes to run. If all groups should be run then all test schemes are run
 local $testForSchemes = "" ;[1] = ["LOG_SAMPLE"]
@@ -45,7 +45,16 @@ Func setupConfigurations()
    createGroupConfig("MOLDERM", "TEST_MOL", "abcde12345")
    local $btnCoords[2] = [1000, 375]
    addTestValue("MOLDERM", "LogSampleButtonCoords", $btnCoords)
-   addTestValue("MOLDERM", "LabelID1", "L12345")
+   addTestValue("MOLDERM", "LabelID1", "L" & Random(0, 1000000, 1))
+
+   ; ----------- BTB ------------
+   createGroupConfig("BTB", "TEST_BTB", "TEST_BTB")
+   local $btnCoords[2] = [1000, 315]
+   addTestValue("BTB", "PatientButtonCoords", $btnCoords)
+   addTestValue("BTB", "LabelID1", "BTB_L12345")
+   $btnCoords[0] = 300
+   $btnCoords[1] = 50
+   addTestValue("BTB", "LoginSampleButtonCoords", $btnCoords)
 
 EndFunc
 
