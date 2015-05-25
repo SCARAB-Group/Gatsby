@@ -14,6 +14,7 @@
 #include <Configuration.au3>
 #include <TestSchemes.au3>
 #include <Array.au3>
+#include <Date.au3>
 
 ; =================================================
 ; Main
@@ -23,7 +24,7 @@
 ; Dev
 
 ; Test
-mouseClickFcn("Citrix XenApp", 1350, 275, 1)
+mouseClickFcn("Citrix XenApp", 1200, 375, 1)
 Sleep(5000)
 ; If Google Chrome then a window will appear asking for permissions for the Citrix App
 $winCheck = WinWait("Citrix Receiver - Security Warning", "", 2)
@@ -35,21 +36,32 @@ EndIf
 setupConfigurations()
 setupTests()
 
-local $groupsToTest[0]
+Local $groupsToTest[0]
+Local $testMode = ""
 
 If $testForGroup == "" Then ; $groupToTest is set in Configuration.au3
-   ConsoleWrite("Testing for all groups" & @CRLF)
+   $testMode = "All groups"
    For $groupName In $groupConfigurations
 	  _ArrayAdd($groupsToTest, $groupName)
    Next
 Else
    _ArrayAdd($groupsToTest, $testForGroup)
+   $testMode = "Single group"
 EndIf
+
+ConsoleWrite("Test mode: " & $testMode & @CRLF)
+logEvent("==========================================", @ScriptDir & "\Example.log")
+logEvent("Testing started" & @CRLF & @TAB & "Test mode: " & $testMode & @CRLF, @ScriptDir & "\Example.log")
+logEvent("Mode: " & $testMode & @CRLF, @ScriptDir & "\Example.log")
+logEvent("==========================================", @ScriptDir & "\Example.log")
 
 
 For $groupName In $groupsToTest
 
    ConsoleWrite("Current group: " & $groupName & @CRLF)
+   logEvent("*****************************************", @ScriptDir & "\Example.log")
+   logEvent("Current group: " & $groupName & @CRLF, @ScriptDir & "\Example.log")
+   logEvent("*****************************************", @ScriptDir & "\Example.log")
 
    ; -------- LOGIN ---------
    $loginStatus = loginLIMS($groupName)
@@ -83,6 +95,7 @@ For $groupName In $groupsToTest
    ; -------- Run tests --------
    For $testSchemeName In $testSchemesToRun
 	  ConsoleWrite("Test scheme: " & $testSchemeName & @CRLF)
+	  logEvent("Test scheme: " & $testSchemeName & @CRLF, @ScriptDir & "\Example.log")
 
 	  local $currentTestScheme = getTestScheme($groupName, $testSchemeName)
 
@@ -112,7 +125,14 @@ For $groupName In $groupsToTest
 
    Next
 
+   ConsoleWrite("About to logout..." & @CRLF)
    logoutLIMS()
+   Sleep($stdSleep)
+
+   ConsoleWrite("Test scheme complete!" & @CRLF)
+   logEvent("*****************************************", @ScriptDir & "\Example.log")
+   logEvent("Test scheme complete!" & @CRLF, @ScriptDir & "\Example.log")
+   logEvent("*****************************************", @ScriptDir & "\Example.log")
 
 Next
 
@@ -120,6 +140,10 @@ closeDialog()
 Sleep($stdSleep)
 Send("{ENTER}")
 
+ConsoleWrite(@CRLF & "All done!" & @CRLF)
+logEvent("==========================================", @ScriptDir & "\Example.log")
+logEvent("All done!" & @CRLF, @ScriptDir & "\Example.log")
+logEvent("==========================================", @ScriptDir & "\Example.log")
 
 
 

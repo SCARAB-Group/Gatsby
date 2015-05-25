@@ -27,7 +27,7 @@
 ; "New" stuff here
 ;=================
 ; Set group name to run the tests for. Set to empty string to run all groups
-local $testForGroup = "" ;"BTB" ;"MOLDERM"
+local $testForGroup = "BBK_PATOL" ;"BTB" ;"MOLDERM"
 
 ; Set test schemes to run. If all groups should be run then all test schemes are run
 local $testForSchemes = "" ;[1] = ["LOG_SAMPLE"]
@@ -56,6 +56,12 @@ Func setupConfigurations()
    $btnCoords[1] = 50
    addTestValue("BTB", "LoginSampleButtonCoords", $btnCoords)
 
+   ; ----------- BBK Patol -----------
+   createGroupConfig("BBK_PATOL", "TEST_PATOL", "abcde12345")
+   local $btnCoords[2] = [1000, 335]
+   addTestValue("BBK_PATOL", "LogSampleButtonCoords", $btnCoords)
+   addTestValue("BBK_PATOL", "NonPreRegLID", "L" & getTrimmedTimeStamp())
+
 EndFunc
 
 
@@ -83,7 +89,7 @@ Local $curProposedValue
 Local $curExpectedOutcome
 Local $curFieldText
 Local $curSleepValue
-
+Local $logSampleSleepValue = 5000
 Local $curTestIndex
 
 

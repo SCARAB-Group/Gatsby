@@ -58,6 +58,40 @@ Func setupTests()
    ]
    addTestScheme("BTB", "Log sample", $btbLoginSampleTestScheme)
 
+   ; ---------- BBK Patol ----------
+   Local $bbkPatolLoginSampleTestScheme[8][8] = [ _
+   ["Click","",getTestValue("BBK_PATOL", "LogSampleButtonCoords"),"","","Log sample", "", "Standard"], _
+   ["Text","",getTestValue("BBK_PATOL","NonPreRegLID"),getTestValue("BBK_PATOL","NonPreRegLID"),"","ProvID",$stdSleep, "Standard"], _
+   ["CloseUserDialog","","","","","Ange provets position", $stdSleep, "Standard"], _
+   ["DismissDialog","","","","","Information", $stdSleep, "Standard"], _
+   ["Text","","PAD","PAD","","PAD-nummer",$stdSleep, "Standard"], _
+   ["Text","","19121212-1212","19121212-1212","","Personnummer",$stdSleep, "Standard"], _
+   ["Glass","B","BBK","","","Samling",$stdSleep, "Standard"], _
+   ["ClickOK","","","","","Log sample", "", "Standard"] _
+   ]
+   addTestScheme("BBK_PATOL", "Log sample non-prereg", $bbkPatolLoginSampleTestScheme)
+
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+;~    ["Skip","","","","","",200, "Standard"], _
+
 EndFunc
 
 ;~    ["List","U","","","","Clincial Site",$stdSleep, "Standard"], _

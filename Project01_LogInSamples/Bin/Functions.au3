@@ -108,11 +108,10 @@ EndFunc
 
 Func logoutLIMS()
    ConsoleWrite("---------------" & @CRLF & "Logging out.." & @CRLF)
+   logEvent("Logging out..." & @CRLF, @ScriptDir & "\Example.log")
    WinWaitActive($curEnvironment)
    Send("!f")
    Send("o")
-
-   Return
 EndFunc
 
 
@@ -242,6 +241,10 @@ Func checkSingleField($fieldType, $propInit, $propVal, $testVal ,$expOutcome, $f
 		 Sleep($sleepVal)
 		 closeUserDialog($fieldText)
 
+	  Case "DismissDialog"
+		 Sleep($sleepVal)
+		 dismissDialog($fieldText)
+
 	  Case Else
 		 Send("{ENTER}")
    EndSwitch
@@ -257,40 +260,48 @@ EndFunc
 
 
 Func checkErrorMsg($fieldType, $propInit, $propVal, $testValSub ,$expOutcome, $fieldText, $sleepVal, $testType)
-   local $winCheck2 = ""
-   consolewrite("CheckErrorMsg: Waiting for info window" & @CRLF & "+++++++++++++++" & @CRLF)
-   $winCheck2 = WinWait("Information", "", 1)
+   ; FieldTypes/events in this list does not assume a popup if something is wrong
+   Local $fieldTypeExceptions[6] = ["ClickOK", "CloseUserDialog", "CloseDialog", "DismissDialog", "Skip", "Click"]
 
-   ; Skipping fields should be done using the skip function in the test scheme array instead
-;~    IF $fieldText == "Personal number" Then
-;~ 	  Send("+{TAB}")
-;~    EndIf
+   If _ArraySearch($fieldTypeExceptions, $fieldType) = -1 Then ; exception field type not found
 
-   If $winCheck2 <> 0 Then
-     $logMsg = "Code |101 Input Error, input value was not accepted: GUI: " & $testSchemeName & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
-     logEvent($logMsg, @ScriptDir & "\Example.log")
+	  local $winCheck2 = ""
+	  consolewrite("CheckErrorMsg: Waiting for info window" & @CRLF & "+++++++++++++++" & @CRLF)
+	  $winCheck2 = WinWait("Information", "", 1)
 
-     WinClose($winCheck2)
-     WinActive($testSchemeName)
+	  ; Skipping fields should be done using the skip function in the test scheme array instead
+   ;~    IF $fieldText == "Personal number" Then
+   ;~ 	  Send("+{TAB}")
+   ;~    EndIf
+
+	  If $winCheck2 <> 0 Then
+		$logMsg = "Code |101 Input Error, input value was not accepted: Test scheme: " & $testSchemeName & " | Type: " & $fieldType & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
+		logEvent($logMsg, @ScriptDir & "\Example.log")
+
+		WinClose($winCheck2)
+		WinActive($testSchemeName)
+
+	  Else
+		 $logMsg = "OK, input value was accepted: Test scheme: " & $testSchemeName & " | Type: " & $fieldType &  " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
+		 logEvent($logMsg, @ScriptDir & "\Example.log")
+	  EndIf
 
    Else
-      $logMsg = "OK, input value was accepted: GUI: " & $testSchemeName & " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
+	  ConsoleWrite("Event: " & $fieldType & " - OK" & @CRLF)
+	  $logMsg = "Event: " & $fieldType & " - OK." & " Test scheme: " & $testSchemeName & " | Type: " & $fieldType &  " | Field: " & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
 	  logEvent($logMsg, @ScriptDir & "\Example.log")
-
 
    EndIf
 
-
-
-   Return
  EndFunc
 
 
 Func clickOK($userDialogName)
-
+   ConsoleWrite("ClickOK event")
    Send("!o")
 
    If ($userDialogName = "Log sample") OR ($userDialogName = "Log sample (Scan field)") Then
+	  ConsoleWrite(" - Log sample window")
 	  local $winCheck = ""
 	  $winCheck = WinWait("Information", "", 2)
 
@@ -302,6 +313,8 @@ Func clickOK($userDialogName)
 		WinActive($userDialogName)
 		Send("!c")
 	 Else
+		 ConsoleWrite("Logging sample.... waiting " & $logSampleSleepValue & " ms" & @CRLF)
+		 Sleep($logSampleSleepValue)
 		 $logMsg = "Sample logged successfully! Current test scheme: " & $testSchemeName
 		 logEvent($logMsg, @ScriptDir & "\Example.log")
 		 closeUserDialog($userDialogName)
@@ -316,14 +329,16 @@ Func clickOK($userDialogName)
 
    EndIf
 
-   Return
+   ConsoleWrite(@CRLF)
 
 EndFunc
 
 ; Close by pressing a "close" button
 Func closeUserDialog($userDialogName)
-   Sleep(2000)
+   ConsoleWrite("closeUserDialog - waiting for dialog: " & $userDialogName & @CRLF)
+   Sleep($stdSleep)
    WinWaitActive($userDialogName)
+   ConsoleWrite("closeUserDialog - about to close dialog: " & $userDialogName & @CRLF)
    Send("!c")
 EndFunc
 
@@ -333,21 +348,28 @@ Func closeDialog()
    Send("x")
 EndFunc
 
+; Close by using the WinClose method
+Func dismissDialog($userDialogName)
+   ConsoleWrite("dismissDialog - waiting for dialog: " & $userDialogName & @CRLF)
+   Sleep($stdSleep)
+   WinWaitActive($userDialogName)
+   ConsoleWrite("dismissDialog - about to close dialog: " & $userDialogName & @CRLF)
+   WinClose($userDialogName)
+EndFunc
+
 Func handleSampleGridWindow()
 
 ;~    Sleep(2000)
 ;~    WinWaitActive("Log sample")
 ;~    Send("!c")
 
-   WinWaitActive("Modify Samples Dialog")
+   ;WinWaitActive("Modify Samples Dialog")
+   WinWait("Modify Samples Dialog", "", 3)
    Send("!f")
    Send("x")
 
    ;Return
 EndFunc
-
-
-
 
 Func testField($curfieldType, $curProposedInit, $curProposedValue, $curTestValue, $curExpectedOutcome, $curFieldText, $curSleepValue, $curTestType)
    ConsoleWrite("Testing for malware code"& @CRLF)
@@ -359,7 +381,7 @@ Func testField($curfieldType, $curProposedInit, $curProposedValue, $curTestValue
 
    $winCheck = WinWait("Information", "", 6)
 
-   $logMsg = "Test #01 initiated. GUI: " & $testSchemeName & " | Field: "  & $curFieldText & " | Testtype: "  & $curTestType  & " | TestInput: "  & $curTestValue
+   $logMsg = "Test #01 initiated. Test scheme: " & $testSchemeName & " | Field: "  & $curFieldText & " | Testtype: "  & $curTestType  & " | TestInput: "  & $curTestValue
    logEvent($logMsg, @ScriptDir & "\Example.log")
 
    If $winCheck == 0 Then
@@ -486,3 +508,8 @@ Func getPassword($groupName)
    Return $groupConfigurations.Item($groupName).Item("pass")
 EndFunc
 
+; Convenience function, returns a string with today's date and the current time with spaces,
+; dashes and colons removed. Format: YYYYDDMM_HHMMSS
+Func getTrimmedTimeStamp()
+   Return StringReplace(StringReplace(StringReplace(_Now(), "-", ""), ":", ""), " ", "_")
+EndFunc
