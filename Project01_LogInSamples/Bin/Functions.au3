@@ -282,13 +282,13 @@ Func checkErrorMsg($fieldType, $propInit, $propVal, $testValSub ,$expOutcome, $f
 		WinActive($testSchemeName)
 
 	  Else
-		 $logMsg = "OK, input value was accepted: Test scheme: " & $testSchemeName & " | Type: " & $fieldType &  " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
+		 $logMsg = "OK, input value was accepted." & " | Type: " & $fieldType &  " | Field: "  & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
 		 logEvent($logMsg, @ScriptDir & "\Example.log")
 	  EndIf
 
    Else
 	  ConsoleWrite("Event: " & $fieldType & " - OK" & @CRLF)
-	  $logMsg = "Event: " & $fieldType & " - OK." & " Test scheme: " & $testSchemeName & " | Type: " & $fieldType &  " | Field: " & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
+	  $logMsg = "Event: " & $fieldType & " - OK." & " | Type: " & $fieldType &  " | Field: " & $fieldText & " | Testtype: "  & $testType  & " | Input: "  & $propVal
 	  logEvent($logMsg, @ScriptDir & "\Example.log")
 
    EndIf
@@ -301,12 +301,12 @@ Func clickOK($userDialogName)
    Send("!o")
 
    If ($userDialogName = "Log sample") OR ($userDialogName = "Log sample (Scan field)") Then
-	  ConsoleWrite(" - Log sample window")
+	  ConsoleWrite(" - Log sample window" & @CRLF)
 	  local $winCheck = ""
 	  $winCheck = WinWait("Information", "", 2)
 
 	  If $winCheck <> 0 Then
-		$logMsg = "Code |103 Login form value, Login values were missing/not accepted, no sample was logged. Current test scheme: " & $testSchemeName
+		$logMsg = "Code |103 Login form value, Login values were missing/not accepted, no sample was logged."
 		logEvent($logMsg, @ScriptDir & "\Example.log")
 
 		WinClose($winCheck)
@@ -315,7 +315,7 @@ Func clickOK($userDialogName)
 	 Else
 		 ConsoleWrite("Logging sample.... waiting " & $logSampleSleepValue & " ms" & @CRLF)
 		 Sleep($logSampleSleepValue)
-		 $logMsg = "Sample logged successfully! Current test scheme: " & $testSchemeName
+		 $logMsg = "Sample logged successfully!"
 		 logEvent($logMsg, @ScriptDir & "\Example.log")
 		 closeUserDialog($userDialogName)
 		 handleSampleGridWindow()
@@ -335,11 +335,12 @@ EndFunc
 
 ; Close by pressing a "close" button
 Func closeUserDialog($userDialogName)
-   ConsoleWrite("closeUserDialog - waiting for dialog: " & $userDialogName & @CRLF)
+   ConsoleWrite(@TAB & "closeUserDialog - waiting for dialog: " & $userDialogName & @CRLF)
    Sleep($stdSleep)
    WinWaitActive($userDialogName)
-   ConsoleWrite("closeUserDialog - about to close dialog: " & $userDialogName & @CRLF)
+   ConsoleWrite(@TAB & "closeUserDialog - about to close dialog: " & $userDialogName & @CRLF)
    Send("!c")
+   ConsoleWrite(@TAB & "closeUserDialog - dialog closed" & @CRLF)
 EndFunc
 
 ; Close by pressing File -> Exit
@@ -350,11 +351,12 @@ EndFunc
 
 ; Close by using the WinClose method
 Func dismissDialog($userDialogName)
-   ConsoleWrite("dismissDialog - waiting for dialog: " & $userDialogName & @CRLF)
+   ;ConsoleWrite(@TAB & "dismissDialog - waiting for dialog: " & $userDialogName & @CRLF)
    Sleep($stdSleep)
    WinWaitActive($userDialogName)
-   ConsoleWrite("dismissDialog - about to close dialog: " & $userDialogName & @CRLF)
+   ConsoleWrite(@TAB & "dismissDialog - about to close dialog: " & $userDialogName & @CRLF)
    WinClose($userDialogName)
+   ConsoleWrite(@TAB & "dismissDialog - dialog closed" & @CRLF)
 EndFunc
 
 Func handleSampleGridWindow()

@@ -51,7 +51,7 @@ EndIf
 
 ConsoleWrite("Test mode: " & $testMode & @CRLF)
 logEvent("==========================================", @ScriptDir & "\Example.log")
-logEvent("Testing started" & @CRLF & @TAB & "Test mode: " & $testMode & @CRLF, @ScriptDir & "\Example.log")
+logEvent("Testing started" & @CRLF, @ScriptDir & "\Example.log")
 logEvent("Mode: " & $testMode & @CRLF, @ScriptDir & "\Example.log")
 logEvent("==========================================", @ScriptDir & "\Example.log")
 
@@ -59,9 +59,9 @@ logEvent("==========================================", @ScriptDir & "\Example.lo
 For $groupName In $groupsToTest
 
    ConsoleWrite("Current group: " & $groupName & @CRLF)
-   logEvent("*****************************************", @ScriptDir & "\Example.log")
+   logEvent("------------------------------------------" @ScriptDir & "\Example.log")
    logEvent("Current group: " & $groupName & @CRLF, @ScriptDir & "\Example.log")
-   logEvent("*****************************************", @ScriptDir & "\Example.log")
+   logEvent("------------------------------------------" @ScriptDir & "\Example.log")
 
    ; -------- LOGIN ---------
    $loginStatus = loginLIMS($groupName)
@@ -130,9 +130,8 @@ For $groupName In $groupsToTest
    Sleep($stdSleep)
 
    ConsoleWrite("Test scheme complete!" & @CRLF)
-   logEvent("*****************************************", @ScriptDir & "\Example.log")
    logEvent("Test scheme complete!" & @CRLF, @ScriptDir & "\Example.log")
-   logEvent("*****************************************", @ScriptDir & "\Example.log")
+   logEvent("------------------------------------------" & @CRLF, @ScriptDir & "\Example.log")
 
 Next
 
