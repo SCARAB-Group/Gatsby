@@ -46,7 +46,7 @@ Func mouseClickFcn($curWindow, $xpos, $ypos, $nrOfClick)
 EndFunc
 
 Func loginLIMS($groupName)
-   ConsoleWrite("---------------" & @CRLF & "Logging in.." & @CRLF)
+   ConsoleWrite("---------------" & @CRLF & "Logging in with group name: " & $groupName & @CRLF)
    WinWaitActive("LabWare LIMS")
    Send("!f")
    Send("i")

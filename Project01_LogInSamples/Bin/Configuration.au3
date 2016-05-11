@@ -27,7 +27,7 @@
 ; "New" stuff here
 ;=================
 ; Set group name to run the tests for. Set to empty string to run all groups
-local $testForGroup = "BBK_PATOL" ;"BTB" ;"MOLDERM"
+local $testForGroup = "MOLDERM"; "BBK_PATOL"; "BTB"
 
 ; Set test schemes to run. If all groups should be run then all test schemes are run
 local $testForSchemes = "" ;[1] = ["LOG_SAMPLE"]
@@ -42,7 +42,7 @@ Func setupConfigurations()
    $groupConfigurations = ObjCreate("Scripting.Dictionary")
 
    ; ----------- MOLDERM ------------
-   createGroupConfig("MOLDERM", "TEST_MOL", "abcde12345")
+   createGroupConfig("MOLDERM", "TEST_MOL", "abc123")
    local $btnCoords[2] = [1000, 375]
    addTestValue("MOLDERM", "LogSampleButtonCoords", $btnCoords)
    addTestValue("MOLDERM", "LabelID1", "L" & Random(0, 1000000, 1))
@@ -57,7 +57,7 @@ Func setupConfigurations()
    addTestValue("BTB", "LoginSampleButtonCoords", $btnCoords)
 
    ; ----------- BBK Patol -----------
-   createGroupConfig("BBK_PATOL", "TEST_PATOL", "abcde12345")
+   createGroupConfig("BBK_PATOL", "TEST_PATOL", "abc123")
    local $btnCoords[2] = [1000, 335]
    addTestValue("BBK_PATOL", "LogSampleButtonCoords", $btnCoords)
    addTestValue("BBK_PATOL", "NonPreRegLID", "L" & getTrimmedTimeStamp())

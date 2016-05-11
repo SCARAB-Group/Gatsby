@@ -24,8 +24,8 @@ Func setupTests()
    ["Skip","","","","","Template",$stdSleep, "Standard"], _
    ["Glass","m","MOLDERM_TER","","","Study",$stdSleep, "Standard"], _
    ["List","k","","","","Clincial Site",$stdSleep, "Standard"], _
-   ["Skip","","","","","Personal number",$stdSleep, "Standard"], _
    ["Text","","TER 88","TER 88","","Subject ID",$stdSleep, "Standard"], _
+   ["Skip","","","","","Personal number",$stdSleep, "Standard"], _
    ["Text","",getTestValue("MOLDERM", "LabelID1"),getTestValue("MOLDERM", "LabelID1"),"","LabelID",$stdSleep, "Standard"], _
    ["List","s","","","","Sample Type",$stdSleep, "Standard"], _
    ["Sprec","","","","","Sprec",$stdSleep, "Standard"], _

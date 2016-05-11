@@ -30,13 +30,14 @@
    ; =================================================
 
 ; Test
- mouseClickFcn("Citrix XenApp", 1200, 375, 1)
- Sleep(5000)
- ; If Google Chrome then a window will appear asking for permissions for the Citrix App
- $winCheck = WinWait("Citrix Receiver - Security Warning", "", 2)
- If $winCheck <> 0 Then
-    MouseClickFcn("Citrix Receiver - Security Warning", 1000, 600, 1)
- EndIf
+#CS  mouseClickFcn("Citrix XenApp", 1200, 375, 1)
+###  Sleep(5000)
+###  ; If Google Chrome then a window will appear asking for permissions for the Citrix App
+###  $winCheck = WinWait("Citrix Receiver - Security Warning", "", 2)
+###  If $winCheck <> 0 Then
+###     MouseClickFcn("Citrix Receiver - Security Warning", 1000, 600, 1)
+###  EndIf
+ #CE
 
    ; =================================================
    ; End Citrix login
@@ -70,12 +71,12 @@ logEvent("==========================================", @ScriptDir & "\Example.lo
 For $groupName In $groupsToTest
 
    ConsoleWrite("Current group: " & $groupName & @CRLF)
-    logEvent("------------------------------------------", @ScriptDir & "\Example.log")
-    logEvent("Current group: " & $groupName & @CRLF, @ScriptDir & "\Example.log")
-    logEvent("------------------------------------------", @ScriptDir & "\Example.log")
+;~    logEvent("------------------------------------------" @ScriptDir & "\Example.log")
+;~    logEvent("Current group: " & $groupName & @CRLF, @ScriptDir & "\Example.log")
+;~    logEvent("------------------------------------------" @ScriptDir & "\Example.log")
    ; -------- LOGIN ---------
-   $loginStatus = loginLIMS($groupName)
-
+  ; $loginStatus = loginLIMS($groupName)
+$loginStatus = True
    If $loginStatus Then
 	  Sleep(3000)  	;TODO: Fix thism
    Else
